@@ -1,0 +1,8 @@
+
+All_Panels_09202018_07102019_forpaper <- read.delim("~/CSPdata/All_Panels_09202018_07102019_forpaper.txt")
+
+t.test(All_Panels_09202018_07102019_forpaper$Target_Freq_eng, All_Panels_09202018_07102019_forpaper$Target_Freq_sp, paired = TRUE)
+
+t.test(All_Panels_09202018_07102019_forpaper_lohi_comparison$Target_Freq_eng_hi, All_Panels_09202018_07102019_forpaper_lohi_comparison$Target_Freq_eng_lo, paired = TRUE)
+
+t.test(All_Panels_09202018_07102019_forpaper_lohi_comparison$Target_Freq_sp_hi, All_Panels_09202018_07102019_forpaper_lohi_comparison$Target_Freq_sp_lo, paired = TRUE)
