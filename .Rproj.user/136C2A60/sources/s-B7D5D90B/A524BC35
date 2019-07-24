@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1562914553407.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "A524BC35",
+    "lastKnownWriteTime" : 7308604914264011873,
+    "last_content_update" : 1562914553407,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "1090BB89",
+        "caption" : "All_Panels_09202018_07102019_forpaper_lohi_comparison",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=All_Panels_09202018_07102019_forpaper_lohi_comparison&cache_key=1090BB89",
+        "displayedObservations" : 67,
+        "environment" : "",
+        "object" : "All_Panels_09202018_07102019_forpaper_lohi_comparison",
+        "preview" : 0,
+        "totalObservations" : 67,
+        "variables" : 58
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

@@ -1,0 +1,9 @@
+{
+    "path" : "~/CS-aids-prediction/EyeTrackingData",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}

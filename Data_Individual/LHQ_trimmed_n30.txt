@@ -1,0 +1,32 @@
+RECORDING_SESSION_LABEL	Q2	Q3	Q4	Q5	Q6	Q7	Q8	Q33	Q32	Q9	Q10	Q11	Q12	Q13	Q14	Q15	Q16	Q17	Q18	Q19	Q20	Q21	Q22_1	Q22_2	Q22_3	Q22_4	Q23_1	Q23_2	Q23_3	Q23_4	Q24_1	Q24_2	Q24_3	Q25_1	Q25_2	Q25_3	Q26	Q27_1	Q28_1	Q30_1	Q31_1	Q29
+p01	1	Male	18	No	Venezuela	3	15	Yes	"Venezuela, 3 years
+USA, 15 years"	0	5		Both equally	English	Both equally	English	English	Spanish	Spanish	Spanish	English	English	10	10	10	10	10	10	10	10	65	35	0	60	40	0	Yes	4	3	3	3	Yes
+p02	2	Female	21	No	Venezuela	4	17	No		0	5	Italian	Both equally	English	English	English	English	Spanish	Spanish	Spanish	Both	Both	10	10	10	10	9	10	7	10	80	20	0	50	50	0	Yes	4	3	4	4	Not Sure
+p03	3	Male	18	No	Venezuela	6	12	No		0	6	Italian	English	English	English	English	English	Spanish	Spanish	Spanish	Spanish	English	10	10	10	10	8	8	8	8	65	33	2	70	25	5	Yes	3	2	3	2	No
+p04	4	Female	19	Yes				No		5	7	French	Both equally	English	Both equally	Both equally	Both equally	Spanish	Spanish	Spanish	Both	Both	10	10	10	10	9	10	9	9	90	10	0	80	20	0	Yes	4	2	4	5	Yes
+p05	5	Female	29	No	Venezuela	21	8	No		0	4		Both equally	Both equally	Both equally	Spanish	Both equally	Both	Spanish	Spanish	Spanish	Spanish	10	10	10	10	10	10	10	10	70	30	0	50	50	0	Yes	4	3	3	3	Yes
+p06	6	Female	22	Yes				Yes	"Venezula, 5 years"	0	0	n/a	Spanish	Both equally	Both equally	English	English	Spanish	Spanish	Spanish	Spanish	Both	10	10	10	10	10	10	9	9	40	60	0	30	70	0	Yes	4	3	4	3	Yes
+p07	7	Female	19	Yes				No		0	3		English	English	English	English	English	Both	Both	English	Both	English	8	8	8	7	6	7	5	6	80	20	0	90	10	0	Yes	2	1	5	3	No
+p09	9	Female	21	Yes				No		0	4	French	Both equally	English	Both equally	English	English	Both	Both	Both	English	Both	10	10	10	10	9	10	8	9	60	40	0	60	40	0	Yes	5	5	5	5	Yes
+p11	11	Female	19	Yes				No		0	0		English	English	English	English	English	Both	Both	English	English	English	10	10	10	10	7	7	7	7	70	30	0	70	30	0	Yes	3	1	3		Not Sure
+p15	15	Female	19	No	Ecuador	4	15	No		0	4		Both equally	English	English	English	English	Spanish	Spanish	Spanish	Spanish	Both	10	10	10	10	10	10	10	9	70	30	0	60	40	0	Yes	5	3	5	3	Yes
+p10	10	Female	18	Yes				No		0	0	N/A	English	English	English	English	English	English	English	English	English	English	10	10	10	10	5	6	7	7	90	10	0	90	10	0	Yes	5	4	4	4	Yes
+p08	8	Female	20	Yes				No		0	5		English	English	English	English	English	Both	Both	Both	Other	English	10	10	10	10	9	9	8	8	70	30	0	90	10	0	Yes	5	3	4	4	Yes
+p12	12	Female	18	Yes				No		12	0	N/A	Both equally	English	Both equally	Both equally	Both equally	Both	English	English	Both	Both	9	10	10	10	5	8	7	8	50	50	0	50	50	0	Yes	3		2		Yes
+p14	14	Female	18	Yes				No		0	4	no	English	English	Both equally	English	English	Both	Spanish	Spanish	English	English	10	10	10	10	7	9	5	6	75	25	0	90	10	0	Not sure	4	2	5	1	Yes
+p16	16	Female	21	Yes				No		0	2	none	English	English	English	English	English	English	English	English	English	English	10	10	10	8	7	9	8	7	80	20	0	100	0	0	Yes	5	4	4	4	Yes
+p17	17	Female	19	Yes				No		0	0	Cantonese	English	English	Both equally	English	English	Both	Other	English	Spanish	English	10	10	10	10	9	8	7	7	70	20	10	60	40	0	Yes	5		5	4	Yes
+p18	18	Female	21	Yes				No		0	0		English	English	English	English	English	Both	Both	Both	Both	Both	10	10	10	10	8	10	7	7	70	30	0	90	10	0	Yes	5	5	5	5	Yes
+p19	19	Female	19	Yes				No		0	4		English	English	English	English	English	Both	English	Spanish	English	English	10	10	10	10	7	8	6	6	80	20	0	70	30	0	Yes	4	3	4		Yes
+p20	20	Female	19	Yes				No		0	3		English	English	Both equally	Both equally	English	Both	Spanish	English	English	English	10	10	10	10	7	10	6	8	60	40	0	100	0	0	Yes	4	2	4	2	Yes
+p21	21	Female	20	No	Spain	2	18	No		2	5		English	English	Both equally	Both equally	English	Spanish	Spanish	Spanish	Both	Both	10	10	10	10	9	10	8	8	60	40	0	80	20	0	Yes	3	2	3	2	Not Sure
+p22	22	Female	18	Yes				No		0	4	French	Both equally	Spanish	English	English	English	Both	Spanish	Both	Both	English	8	8	4	7	8	10	5	7	50	45	5	0	50	50	Yes	5	5	5	5	Yes
+p23	23	Female	19	Yes				No		0	5		English	English	English	English	English	Both	Both	Both	English	English	10	10	10	10	7	9	7	7	70	30	0	80	20	0	Yes	4	1	3	2	Not Sure
+p24	24	Female	20	Yes				No		0	0	Hebrew	English	English	English	English	English	English	Both	English	Other	Both	10	10	9	10	7	9	8	9	70	20	10	60	10	30	Not sure	3		2		No
+p25	25	Female	20	Yes				Yes	"Switzerland, 5.5 years"	1	0	French	English	English	English	English	English	English	English	English	English	Spanish	10	10	10	10	7	10	5	5	75	20	5	5	75	20	Yes	5	3	5	5	Not Sure
+p26	26	Female	19	Yes				No		0	3	"French, Italian"	Both equally	English	Both equally	English	English	Both	Both	Spanish	Both	English	10	10	10	10	10	10	8	10	80	18	2	80	18	2	Yes	4	2	3	5	Not Sure
+p27	27	Male	28	No	Puerto Rico	27	1.5	No		0	5	na	Spanish	Spanish	Both equally	Both equally	Spanish	Spanish	Spanish	Spanish	Spanish	Both	9	9	8	9	10	10	10	10	30	70	0	20	80	0	Yes	4	3	3	3	Yes
+p29	29	Male	32	No	Colombia	26	7	No		0	4	"Portuguese, French"	Spanish	Spanish	Spanish	Both equally	Both equally	Spanish	Spanish	Spanish	Spanish	Spanish	8	9	9	9	10	10	10	10	50	50	0	30	70	0	Yes	3	1	3		No
+p28	28	Female	26	Yes				Yes	"Taiwan, 5 years"	0	4	"Mandarin Chinese, Turkish"	English	English	English	English	English	Both	English	Spanish	English	English	10	10	10	10	8	8	5	5	75	25	0	34	33	33	Yes	4	2	3	2	Yes
+p30	30	Female	21	No	Cuba	10	11	No		0	10		Both equally	Both equally	Both equally	Both equally	Both equally	Both	Both	Spanish	Both	Both	10	9	9	10	10	10	10	10	50	45	5	50	50	0	Yes	5	5	5	4	Yes
+p31	31	Female	24	No	Puerto Rico	21	3	No		0	5	"French, Portuguese"	Spanish	Spanish	Spanish	Spanish	Spanish	Spanish	Spanish	Spanish	Both	Both	10	9	9	10	10	10	10	10	80	20	0	50	50	0	Yes	5	5	5	5	Yes
