@@ -3,6 +3,7 @@ library(lme4)
 library(ez)
 library(multcomp)
 
+
 sound_word_pre800_post500_n30 <- read.delim("sound_word_pre800_post500_n30.txt")
 
 sound_word_pre800_post500_n30_exp <- sound_word_pre800_post500_n30 %>% 
