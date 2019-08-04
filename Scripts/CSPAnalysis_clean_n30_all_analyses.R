@@ -1,5 +1,9 @@
+install.packages("lme4")
+install.packages("tidyverse")
 library(tidyverse)
 library(lme4)
+install.packages("dplyr")
+library(dplyr)
 library(ez)
 library(multcomp)
 
@@ -18,7 +22,10 @@ sound_word_pre800_post500_n30_exp_1301 <- sound_word_pre800_post500_n30_exp_1301
 #times je number of participants * number of exp trials, ovde 32 * 30 = 960
 bini <- seq(0, 1300, by = 20)
 
-breaki <- seq(20,1300, by = 20)
+#breaki <- seq(20,1300, by = 20)
+#this is how it was
+breaki <- seq(1,65, by = 1)
+#this is how it should have been 
 
 sound_word_pre800_post500_n30_exp_1301 <- sound_word_pre800_post500_n30_exp_1301 %>%
   mutate(Bins = cut(Time, bini, labels = breaki))
@@ -139,6 +146,10 @@ target_sub_200pre_200post_word$DELE.MELICET[is.na(target_sub_200pre_200post_word
 write.csv(target_sub_200pre_200post_word, "target_sub_200pre_200post_word.csv")
 
 
+target_sub_200pre_200post_word <- read.csv("~/CS-aids-prediction/Data_Eyetracking/target_sub_200pre_200post_word.csv")
+
+target_sub_200pre_200post_word_no30bin <- target_sub_200pre_200post_word %>%
+  filter(Bins > 30)
 
 target_model_200pre_200post_word <- lmer(Prop ~ language*DELE.MELICET*Bins*Freq_of_fixated_item + (1+language*Freq_of_fixated_item|RECORDING_SESSION_LABEL), data = target_sub_200pre_200post_word_poly)
 summary(target_model_200pre_200post_word)
@@ -151,61 +162,151 @@ summary(target_model_200pre_200post_word_just1_freq)
 #ovo RECORDING_SESSION_LABEL/pair_num znaci da je nesto nested in nesto, subject in therapist, jer svaki therapist vidi nekoliko odvojenih subjecta
 # ali ovde ne moze, jer svaki participant vidi sve pair numove 
 
+target_sub_200pre_200post_word_item <- read_csv("Data_Eyetracking/target_sub_200pre_200post_word_item.csv")
+
+###ORTHOGONAL POLYNOMIALS TIME TRANSFORMATION
 
 
-orthogonal_polynomials <- poly(sort(as.vector(unique(target_sub_200pre_200post_word$Time))), 5)
+orthogonal_polynomials <- poly(sort(as.vector(unique(target_sub_200pre_200post_word_no30bin$Time))), 5)
 
 time_codes <- data.frame(
-  sort(as.vector(unique(target_sub_200pre_200post_word$Time))),
-  orthogonal_polynomials[, c(1:5)]
-)
+  sort(as.vector(unique(target_sub_200pre_200post_word_no30bin$Time))),
+  orthogonal_polynomials[, c(1:5)])
 
 colnames(time_codes) <- c('Time','ot1','ot2','ot3','ot4','ot5')
 
-target_sub_200pre_200post_word_poly <- merge(target_sub_200pre_200post_word, time_codes, by='Time')
+target_sub_200pre_200post_word_no30bin_poly <- merge(target_sub_200pre_200post_word_no30bin, time_codes, by='Time')
 #added orthogonal curvy polynomials
 
 #mogla bih da plotujem ovde, mozda je trebalo od 1 da mi krece Time
-target_sub_200pre_200post_word_poly %>% 
-  ggplot(data = ., aes(Bins, ot1)) +
+target_sub_200pre_200post_word_no30bin_poly %>% 
+  ggplot(data = ., aes(Time, ot3)) +
   stat_summary(fun.y = mean, geom = "point") + 
   stat_smooth() +
   facet_wrap(~language)
 #yeeeeeah sad je kako treba
 
-target_sub_200pre_200post_word_poly_centered <- target_sub_200pre_200post_word_poly %>%
+target_sub_200pre_200post_word_no30bin_poly_centered <- target_sub_200pre_200post_word_no30bin_poly %>%
   mutate(Prop_cs = as.numeric(scale(Prop, center = TRUE, scale = TRUE)),
          DELE.MELICET_cs = as.numeric(scale(DELE.MELICET, center = TRUE, scale = TRUE)),
          Bins_cs = as.numeric(scale(Bins, center = TRUE, scale = TRUE)))
 
-target_sub_200pre_200post_word_poly_centered %>% 
+target_sub_200pre_200post_word_no30bin_poly_centered %>% 
   ggplot(data = ., aes(Bins_cs, Prop, color = Freq_of_fixated_item)) +
   stat_summary(fun.y = mean, geom = "point") + 
   stat_smooth() +
   facet_wrap(~language) + xlab("Time_scaled") + ylab("Proportion of looks")
 
-
 str(target_sub_200pre_200post_word_poly_centered)
 
-write.csv(target_sub_200pre_200post_word_poly_centered, "target_sub_200pre_200post_word_poly_centered.csv")
+write.csv(target_sub_200pre_200post_word_no30bin_poly_centered, "target_sub_200pre_200post_word_no30bin_poly_centered.csv")
 
 target_sub_200pre_200post_word_poly_centered$DELE.MELICET_cs <- setNames(split(target_sub_200pre_200post_word_poly_centered$DELE.MELICET_cs, seq(nrow(target_sub_200pre_200post_word_poly_centered$DELE.MELICET_cs))), rownames(xy.df))
+#was dis?
 
-
-target_sub_200pre_200post_word_poly_centered_catDom <- target_sub_200pre_200post_word_poly_centered %>%
+target_sub_200pre_200post_word_no30bin_poly_centered_catDom <- target_sub_200pre_200post_word_no30bin_poly_centered %>%
   mutate(dominance_cat = ifelse(DELE.MELICET>mean(DELE.MELICET), "SpDom", "EngDom"))
 
 View(target_sub_200pre_200post_word_poly_centered)
 str(target_sub_200pre_200post_word_poly_centered)
-    
-target_sub_200pre_200post_word_poly_centered_catDom %>% ggplot(data = ., aes(Bins_cs, Prop, color = Freq_of_fixated_item)) +
-stat_summary(fun.y = mean, geom = "point") + 
+
+target_sub_200pre_200post_word_no30bin_poly_centered_catDom %>% ggplot(data = ., aes(Bins_cs, Prop, color = Freq_of_fixated_item)) +
+  stat_summary(fun.y = mean, geom = "point") + 
+  stat_smooth() +
+  facet_grid(cols = vars(language), rows = vars(dominance_cat)) + xlab("Time_scaled") + ylab("Proportion of looks")
+
+write.csv(target_sub_200pre_200post_word_no30bin_poly_centered_catDom, "target_sub_200pre_200post_word_no30bin_poly_centered_catDom.csv")
+
+
+#ITEM ORTHO POLY
+
+target_sub_200pre_200post_word_item <- target_sub_200pre_200post_word_item %>%
+  mutate(Time = Bins)
+
+orthogonal_polynomials <- poly(sort(as.vector(unique(target_sub_200pre_200post_word_item$Time))), 5)
+
+time_codes <- data.frame(
+  sort(as.vector(unique(target_sub_200pre_200post_word_item$Time))),
+  orthogonal_polynomials[, c(1:5)])
+
+colnames(time_codes) <- c('Time','ot1','ot2','ot3','ot4','ot5')
+
+target_sub_200pre_200post_word_item_poly <- merge(target_sub_200pre_200post_word_item, time_codes, by='Time')
+#added orthogonal curvy polynomials
+
+#mogla bih da plotujem ovde, mozda je trebalo od 1 da mi krece Time
+target_sub_200pre_200post_word_item_poly %>% 
+  ggplot(data = ., aes(Time, ot2)) +
+  stat_summary(fun.y = mean, geom = "point") + 
+  stat_smooth() +
+  facet_wrap(~language)
+#yeeeeeah sad je kako treba
+
+target_sub_200pre_200post_word_item_poly$DELE.MELICET[is.na(target_sub_200pre_200post_word_item_poly$DELE.MELICET)] <- 0.71
+
+
+
+target_sub_200pre_200post_word_item_poly_centered <- target_sub_200pre_200post_word_item_poly %>%
+  mutate(Prop_cs = as.numeric(scale(Prop, center = TRUE, scale = TRUE)),
+         DELE.MELICET_cs = as.numeric(scale(DELE.MELICET, center = TRUE, scale = TRUE)),
+         Bins_cs = as.numeric(scale(Bins, center = TRUE, scale = TRUE)))
+
+target_sub_200pre_200post_word_item_poly_centered %>% 
+  ggplot(data = ., aes(Bins_cs, Prop, color = Freq_of_fixated_item)) +
+  stat_summary(fun.y = mean, geom = "point") + 
+  stat_smooth() +
+  facet_wrap(~language) + xlab("Time_scaled") + ylab("Proportion of looks")
+
+write.csv(target_sub_200pre_200post_word_item_poly_centered, "target_sub_200pre_200post_word_item_poly_centered.csv")
+
+str(target_sub_200pre_200post_word_item_poly_centered)
+
+#target_sub_200pre_200post_word_item_poly_centered$DELE.MELICET_cs <- setNames(split(target_sub_200pre_200post_word_poly_centered$DELE.MELICET_cs, seq(nrow(target_sub_200pre_200post_word_poly_centered$DELE.MELICET_cs))), rownames(xy.df))
+#was dis?
+
+
+target_sub_200pre_200post_word_item_poly_centered_catDom <- target_sub_200pre_200post_word_item_poly_centered %>%
+  mutate(dominance_cat = ifelse(DELE.MELICET>mean(DELE.MELICET), "SpDom", "EngDom")) %>%
+  dplyr::select(-DELE.MELICET_)
+
+target_sub_200pre_200post_word_item_poly_centered_catDom %>% ggplot(data = ., aes(Bins_cs, Prop, color = Freq_of_fixated_item)) + stat_summary(fun.y = mean, geom = "point") + 
 stat_smooth() +
 facet_grid(cols = vars(language), rows = vars(dominance_cat)) + xlab("Time_scaled") + ylab("Proportion of looks")
 
-  
+write.csv(target_sub_200pre_200post_word_item_poly_centered_catDom, "target_sub_200pre_200post_word_item_poly_centered_catDom.csv")
+
+#MODELS
+target_sub_200pre_200post_word_no30bin_poly_centered_catDom_1only <- target_sub_200pre_200post_word_no30bin_poly_centered_catDom %>%
+  filter(Look == 1)
 
 model_target_sub_200pre_200post_word_poly <- lmer(Prop ~ language*DELE.MELICET*Freq_of_fixated_item*(ot1 + ot3+ ot2) + (1+language+Freq_of_fixated_item+ot1+ot2+ot3|RECORDING_SESSION_LABEL), target_sub_200pre_200post_word_poly_centered)
+summary(model_target_sub_200pre_200post_word_poly)
+
+#this one! poly 400ms 
+model_target_sub_200pre_200post_word_no30bin_poly_centered_catDom <- lmer(Prop_cs ~ language*DELE.MELICET_cs*Freq_of_fixated_item*(ot1 + ot3+ ot2) + (1+language+Freq_of_fixated_item+ot1+ot2+ot3|RECORDING_SESSION_LABEL), target_sub_200pre_200post_word_no30bin_poly_centered_catDom)
+summary(model_target_sub_200pre_200post_word_no30bin_poly_centered_catDom)
+plot(model_target_sub_200pre_200post_word_no30bin_poly_centered_catDom)
+qqnorm(resid(model_target_sub_200pre_200post_word_no30bin_poly_centered_catDom))
+anova(model_target_sub_200pre_200post_word_no30bin_poly_centered_catDom)
+
+#spanish -0.5 CS +0.5
+target_sub_200pre_200post_word_no30bin_poly_centered_catDom_LangContrastCoding <- target_sub_200pre_200post_word_no30bin_poly_centered_catDom %>%
+  mutate(language_cont = ifelse(language == 'S', -0.5, 0.5))
+write.csv(target_sub_200pre_200post_word_no30bin_poly_centered_catDom_LangContrastCoding, "target_sub_200pre_200post_word_no30bin_poly_centered_catDom_LangContrastCoding.csv")
+
+model_target_sub_200pre_200post_word_no30bin_poly_centered_catDom_LangContrastCoding <- lmer(Prop_cs ~ language_cont*DELE.MELICET_cs*Freq_of_fixated_item*(ot1 + ot3+ ot2) + (1+language_cont+Freq_of_fixated_item+ot1+ot2+ot3|RECORDING_SESSION_LABEL), target_sub_200pre_200post_word_no30bin_poly_centered_catDom_LangContrastCoding)
+summary(model_target_sub_200pre_200post_word_no30bin_poly_centered_catDom_LangContrastCoding)
+
+model_target_sub_200pre_200post_word_item_poly_centered_catDom_OP <- lmer(Prop_cs ~ language*DELE.MELICET_cs*Freq_of_fixated_item*(ot1 + ot3+ ot2) + (1+language+Freq_of_fixated_item+ot1+ot2+ot3|RECORDING_SESSION_LABEL)+(1+language+Freq_of_fixated_item+ot1+ot2+ot3|pair_num), target_sub_200pre_200post_word_item_poly_centered_catDom)
+summary(model_target_sub_200pre_200post_word_item_poly_centered_catDom_OP)
+plot(model_target_sub_200pre_200post_word_item_poly_centered_catDom_OP)
+qqnorm(resid(model_target_sub_200pre_200post_word_item_poly_centered_catDom_OP))
+
+
+model_target_sub_200pre_200post_word_poly_centered_1only <- lmer(Prop_cs ~ language*DELE.MELICET_cs*Freq_of_fixated_item*(ot1 + ot3+ ot2) + (1+language+Freq_of_fixated_item+ot1+ot2+ot3|RECORDING_SESSION_LABEL), target_sub_200pre_200post_word_poly_centered_1only)
+summary(model_target_sub_200pre_200post_word_poly_centered_1only)
+
+print(model_target_sub_200pre_200post_word_poly_prop_cs, correlation=TRUE)
 
 model_target_sub_200pre_200post_word_cs <- lmer(Prop_cs ~ language*DELE.MELICET_cs*Freq_of_fixated_item*Bins  + (1+language*Freq_of_fixated_item|RECORDING_SESSION_LABEL), target_sub_200pre_200post_word_poly_centered)
 summary(model_target_sub_200pre_200post_word_cs)
@@ -213,19 +314,39 @@ summary(model_target_sub_200pre_200post_word_cs)
 model_target_sub_200pre_200post_word_cs_bins_cs <- lmer(Prop_cs ~ language*DELE.MELICET_cs*Freq_of_fixated_item*Bins_cs  + (1+language*Freq_of_fixated_item|RECORDING_SESSION_LABEL), target_sub_200pre_200post_word_poly_centered)
 summary(model_target_sub_200pre_200post_word_cs_bins_cs)
 
+model_reg_target_sub_200pre_200post_word_no30bin_poly_centered_catDom_noBins <- lmer(Prop_cs ~ language*DELE.MELICET_cs*Freq_of_fixated_item  + (1+language*Freq_of_fixated_item|RECORDING_SESSION_LABEL), target_sub_200pre_200post_word_no30bin_poly_centered_catDom)
+summary(model_reg_target_sub_200pre_200post_word_no30bin_poly_centered_catDom_noBins)
+
+model_target_sub_200pre_200post_word_poly_centered_1only_noBins <- lmer(Prop_cs ~ language*DELE.MELICET_cs*Freq_of_fixated_item  + (1+language*Freq_of_fixated_item|RECORDING_SESSION_LABEL), target_sub_200pre_200post_word_poly_centered_1only)
+summary(model_target_sub_200pre_200post_word_poly_centered_1only_noBins)
+
+
 model_target_sub_200pre_200post_word_cs_bins_cs_prop_nonCs <- lmer(Prop ~ language*DELE.MELICET_cs*Freq_of_fixated_item*Bins_cs  + (1+language*Freq_of_fixated_item|RECORDING_SESSION_LABEL), target_sub_200pre_200post_word_poly_centered)
 summary(model_target_sub_200pre_200post_word_cs_bins_cs_prop_nonCs)
+
+
+model_target_sub_200pre_200post_word_poly_prop_cs
+data.frame(target_sub_200pre_200post_word_poly_centered, Predicted=fitted(model_target_sub_200pre_200post_word_poly_prop_cs))->plotearly_poly_cs
+str(plotearly_poly_cs)
 
 data.frame(target_sub_200pre_200post_word_poly_centered, Predicted=fitted(model_target_sub_200pre_200post_word_cs))->plotearly_cs
 plotearly_cs
 
-data.frame(target_sub_200pre_200post_word_poly_centered, Predicted=fitted(model_target_sub_200pre_200post_word_cs_bins_cs))->plotearly_cs_bins_cs
-plotearly_cs_bins_cs
+data.frame(target_sub_200pre_200post_word_poly_centered_1only, Predicted=fitted(model_target_sub_200pre_200post_word_poly_centered_1only_noBins))->plotearly_cs_noBins_cs_only1
+plotearly_cs_noBins_cs_only1
+
+
+data.frame(target_sub_200pre_200post_word_poly_centered, Predicted=fitted(model_target_sub_200pre_200post_word_cs_bins_cs))->plotearly_cs_noBins_cs_only1
 
 data.frame(target_sub_200pre_200post_word_poly_centered, Predicted=fitted(model_target_sub_200pre_200post_word_cs_bins_cs_prop_nonCs))->plotearly_cs_bins_cs_prop_nonCs
 plotearly_cs_bins_cs_prop_nonCs
 
-ggplot(plotearly_cs_bins_cs_prop_nonCs, aes(Bins_cs, Prop, color=Freq_of_fixated_item))+facet_grid(.~language)+stat_summary(aes(y=Predicted, color=Freq_of_fixated_item), fun.y=mean, geom="line")+stat_summary(fun.data=mean_se, geom="pointrange")+theme_bw()+labs(x="-200 ms to word onset +200 after word onset", y = "Proportion of Looks")
+data.frame(target_sub_200pre_200post_word_poly_centered, Predicted=fitted(model_target_sub_200pre_200post_word_cs_noBins))->plotearly_noBins_prop_cs
+plotearly_noBins_prop_cs
+
+
+#number of observations, 4757, 30 participants x 4 conditions x 20 bins in 400ms x number of looks we looked at, 1 and 2
+plot(model_target_sub_200pre_200post_word_cs_noBins)
 
 anova(model_target_sub_200pre_200post_word_poly, model_target_sub_200pre_200post_word_cs)
 anova(model_target_sub_200pre_200post_word_cs, model_target_sub_200pre_200post_word_cs_bins_cs)
@@ -244,6 +365,7 @@ data.frame(target_sub_200pre_200post_word, Predicted=fitted(target_model_200pre_
 plotearly
 
 
-ggplot(plotearly1, aes(Bins, Prop, color=Freq_of_fixated_item))+facet_grid(.~language)+stat_summary(aes(y=Predicted, color=Freq_of_fixated_item), fun.y=mean, geom="line")+stat_summary(fun.data=mean_se, geom="pointrange")+theme_bw()+labs(x="-200 ms to word onset, +200 after word onset", y = "Proportion Looks to Target")
+ggplot(plotearly_cs_noBins_cs_only1, aes(Bins_cs, Prop_cs, color=Freq_of_fixated_item))+facet_grid(.~language)+stat_summary(aes(y=Predicted, color=Freq_of_fixated_item), fun.y=mean, geom="line")+stat_summary(fun.data=mean_se, geom="pointrange")+theme_bw()+labs(x="-200 ms to word onset, +200 after word onset (normalized)", y = "Proportion of looks to items (normalized)")
+
 
 anova(target_model_200pre_200post_word, model_target_sub_200pre_200post_word_poly)
